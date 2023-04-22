@@ -1,23 +1,33 @@
 SHELL = /bin/sh
 SRCDIR = src
+TMPDIR = build
+BINDIR = bin
 
 EXECNAME = modopus 
+MAIN = $(BINDIR)/$(EXECNAME)
 SOURCES = $(wildcard $(SRCDIR)/*.c)
-OBJECTS = $(SOURCES:%.c=%.o)
+OBJECTS = $(SOURCES:$(SRCDIR)/%.c=$(TMPDIR)/%.o)
 
 CC = clang 
 CFLAGS = -Wall -Werror -Wextra -pedantic -g -I /usr/include/opus
 LIBS = $(shell pkg-config --libs libopenmpt libopusenc)
 
-.PHONY: all clean
+.PHONY: all clean build bin
 
-all: $(EXECNAME)
+all: $(MAIN)
 
-$(EXECNAME): $(OBJECTS)
+$(MAIN): $(OBJECTS)
+	mkdir -p $(BINDIR)
 	$(CC) $(LIBS) $^ -o $@
 	
-%.o : %.c
+$(TMPDIR)/%.o : $(SRCDIR)/%.c build
 	$(CC) $(CFLAGS) -c $< -o $@
 
+build:
+	mkdir -p $(TMPDIR)
+
+bin:
+	mkdir -p $(BINDIR)
+
 clean:
-	rm  -f $(EXECNAME) $(SRCDIR)/*.o
+	rm -f $(OBJECTS) $(MAIN)
