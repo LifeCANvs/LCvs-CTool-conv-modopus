@@ -42,7 +42,7 @@ void clean_comments(modopus_comments *);
 void print_settings(const char *, const char *, const modopus_settings);
 
 bool validate_file(char **);
-void supported();
+void supported(void);
 openmpt_module *create_mod(const char *, const modopus_settings);
 void module_print_metadata(openmpt_module *);
 void module_print_subsongs(openmpt_module *);

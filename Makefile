@@ -7,7 +7,7 @@ OBJECTS = $(SOURCES:%.c=%.o)
 
 CC = clang 
 CFLAGS = -Wall -Werror -Wextra -pedantic -g -I /usr/include/opus
-LIBS = -lopenmpt -lopus -lopusenc
+LIBS = $(shell pkg-config --libs libopenmpt libopusenc)
 
 .PHONY: all clean
 

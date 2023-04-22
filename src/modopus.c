@@ -101,7 +101,7 @@ bool validate_file(char **split_path){
 
 /* Prints the list of supported file types.
  */
-void supported(){
+void supported(void){
   const char *supported = openmpt_get_supported_extensions();
   printf("Current supported formats are:\n%s\n",supported);
 }
